@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boopa Analytics | Sailor Piece Values</title>
+    <title>Sailor Piece Values | Sailor Piece Values</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -71,7 +71,7 @@
     <button class="theme-btn" onclick="toggleTheme()">🌓</button>
 
     <header>
-        <div class="logo">BOOPA <span style="color:var(--accent)">ANALYSIS</span></div>
+        <div class="logo">Sailor Piece <span style="color:var(--accent)">ANALYSIS</span></div>
         <div style="display:flex; gap:10px;">
             <button class="btn" onclick="showLogin()" style="font-size:11px;">OWNER LOGIN</button>
         </div>
@@ -119,7 +119,7 @@
         }
 
         function showLogin() {
-            if(prompt("Admin Password:") === "BOOPA_OWNER_2026") {
+            if(prompt("Admin Password:") === "boopapengu") {
                 sessionStorage.setItem('isAdmin', 'true');
                 document.getElementById('adminPanel').style.display = 'block';
                 render();
