@@ -3,111 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sailor Piece Values | Official Hub</title>
+    <title>Sailor Piece Values | Boopa Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0b0b0f; --sidebar: #111116; --card: #16161d; --border: #26262f; --accent: #3b82f6; }
-        body { background: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .sidebar { width: 280px; height: 100vh; background: var(--sidebar); border-right: 1px solid var(--border); position: fixed; left: 0; top: 0; z-index: 50; padding: 2rem 1.5rem; }
-        .main-content { margin-left: 280px; padding: 2.5rem; }
-        .item-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; transition: 0.3s; position: relative; overflow: hidden; }
-        .item-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3); }
-        .calc-panel { background: #111116; border: 1px solid var(--border); border-radius: 24px; padding: 2rem; margin-bottom: 3rem; }
-        .tag { font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
-        .tag-mythical { background: rgba(236, 72, 153, 0.1); color: #ec4899; }
-        .tag-secret { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
-        @media (max-width: 1024px) { .sidebar { display: none; } .main-content { margin-left: 0; padding: 1.5rem; } }
+        body { background-color: #0d0d0d; color: #e5e5e5; font-family: 'Segoe UI', sans-serif; }
+        .card { background: #1a1a1a; border: 1px solid #333; transition: 0.3s; }
+        .card:hover { border-color: #00eaff; transform: translateY(-2px); }
+        .badge-mythic { background: #ff4444; color: white; }
+        .badge-legend { background: #bb44ff; color: white; }
+        .value-text { color: #00eaff; font-weight: bold; }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-8">
 
-    <aside class="sidebar">
-        <div class="flex items-center gap-3 mb-12">
-            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-black italic text-xl">S</div>
-            <h1 class="font-extrabold text-lg uppercase tracking-tighter text-white">Sailor<span class="text-blue-500">Values</span></h1>
+    <header class="text-center mb-12">
+        <h1 class="text-5xl font-black italic text-cyan-400 mb-2">SAILOR PIECE VALUES</h1>
+        <p class="text-gray-400">Current Meta: <span class="text-white font-bold">Infinite Tower Update (April 2026)</span></p>
+        <div class="mt-4 flex justify-center gap-4">
+            <span class="bg-gray-800 px-3 py-1 rounded text-sm">Currency: 🌀 Clan Rerolls</span>
+            <span class="bg-gray-800 px-3 py-1 rounded text-sm">Status: 🟢 Updated</span>
         </div>
-        <nav class="space-y-1">
-            <button onclick="filterType('all')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 transition font-semibold text-sm">🏠 Dashboard</button>
-            <button onclick="filterType('Weapon')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 transition font-semibold text-sm">⚔️ Swords</button>
-            <button onclick="filterType('Accessory')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 transition font-semibold text-sm">🧥 Accessories</button>
-            <button onclick="filterType('Fruit')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 transition font-semibold text-sm">🍍 Fruits</button>
-        </nav>
-    </aside>
+    </header>
 
-    <main class="main-content">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
-            <h2 class="text-4xl font-black tracking-tighter uppercase italic text-white">Live <span class="text-blue-500 text-3xl">Analytics</span></h2>
-            <input type="text" id="search" onkeyup="search()" placeholder="Search item..." class="w-full md:w-96 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-blue-500 transition">
-        </header>
+    <nav class="flex flex-wrap justify-center gap-4 mb-10">
+        <a href="#SWORD" class="px-6 py-2 rounded-full bg-cyan-600 hover:bg-cyan-500 font-bold">SWORD</a>
+        <a href="#ACCESSORY" class="px-6 py-2 rounded-full bg-purple-600 hover:bg-purple-500 font-bold">ACCESSORY</a>
+        <a href="#MELEE" class="px-6 py-2 rounded-full bg-red-600 hover:bg-red-500 font-bold">MELEE</a>
+        <a href="#ITEMS" class="px-6 py-2 rounded-full bg-green-600 hover:bg-green-500 font-bold">ITEMS</a>
+    </nav>
 
-        <section class="calc-panel">
-            <h3 class="font-extrabold uppercase italic tracking-wider mb-6 text-blue-500 text-sm">Trade Calculator</h3>
-            <div class="grid grid-cols-2 gap-8">
-                <div class="text-center"><p class="text-[10px] font-bold text-gray-500 mb-2">YOUR SIDE</p><span id="your-total" class="font-black text-2xl text-white">0 CR</span></div>
-                <div class="text-center"><p class="text-[10px] font-bold text-gray-500 mb-2">THEIR SIDE</p><span id="their-total" class="font-black text-2xl text-red-500">0 CR</span></div>
-            </div>
-            <div id="calc-status" class="mt-6 text-center py-3 bg-white/5 rounded-xl font-black text-xs uppercase tracking-widest text-gray-500">Awaiting Data...</div>
-        </section>
-
-        <div id="item-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-    </main>
-
-    <script>
-        const database = [
-            { name: "Atomic Sword", price: 1350000, rarity: "Mythical", demand: "🔥 High", type: "Weapon", icon: "☢️" },
-            { name: "Ice Queen Sword", price: 1100000, rarity: "Mythical", demand: "🔥 High", type: "Weapon", icon: "❄️" },
-            { name: "Abyssal Empress", price: 1050000, rarity: "Mythical", demand: "Stable", type: "Weapon", icon: "🔱" },
-            { name: "Aura Crate", price: 485, rarity: "Secret", demand: "📈 Extreme", type: "Material", icon: "✨" },
-            { name: "Ice Queen Outfit", price: 185, rarity: "Mythical", demand: "Low", type: "Accessory", icon: "👑" },
-            { name: "Moon Outfit", price: 65, rarity: "Mythical", demand: "Very Low", type: "Accessory", icon: "🌙" },
-            { name: "Light Fruit", price: 22, rarity: "Legendary", demand: "Medium", type: "Fruit", icon: "☀️" },
-            { name: "Abyss Sigil", price: 7, rarity: "Legendary", demand: "High", type: "Material", icon: "🌀" }
-        ];
-
-        let ySum = 0, tSum = 0;
-
-        function render(data) {
-            document.getElementById('item-grid').innerHTML = data.map(i => `
-                <div class="item-card p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="tag tag-${i.rarity.toLowerCase()}">${i.rarity}</span>
-                        <div class="flex gap-2">
-                            <button onclick="calc('y',${i.price})" class="w-7 h-7 bg-green-500/10 text-green-500 rounded font-bold text-[10px] hover:bg-green-500 hover:text-white transition">Y</button>
-                            <button onclick="calc('t',${i.price})" class="w-7 h-7 bg-red-500/10 text-red-500 rounded font-bold text-[10px] hover:bg-red-600 hover:text-white transition">T</button>
-                        </div>
-                    </div>
-                    <div class="text-center pb-4">
-                        <div class="text-4xl mb-4">${i.icon}</div>
-                        <h4 class="font-extrabold text-sm uppercase tracking-tight">${i.name}</h4>
-                        <p class="text-blue-500 font-black text-lg">${i.price.toLocaleString()} CR</p>
-                    </div>
+    <section id="SWORD" class="mb-16">
+        <h2 class="text-2xl font-bold mb-6 border-l-4 border-cyan-500 pl-4">⚔️ SWORDS</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="card p-4 rounded-lg flex justify-between items-center">
+                <div>
+                    <span class="text-xs badge-mythic px-2 py-0.5 rounded">MYTHICAL</span>
+                    <h3 class="text-lg font-bold">Atomic</h3>
+                    <p class="text-sm text-gray-500">Demand: 📈 High</p>
                 </div>
-            `).join('');
-        }
+                <div class="text-right">
+                    <p class="value-text">2,800 CR</p>
+                    <p class="text-[10px] text-gray-400">Eminence Incarnate</p>
+                </div>
+            </div>
+            <div class="card p-4 rounded-lg flex justify-between items-center">
+                <div>
+                    <span class="text-xs badge-mythic px-2 py-0.5 rounded">MYTHICAL</span>
+                    <h3 class="text-lg font-bold">Shadow Monarch</h3>
+                    <p class="text-sm text-gray-500">Demand: ↔️ Stable</p>
+                </div>
+                <div class="text-right">
+                    <p class="value-text">2,100 CR</p>
+                    <p class="text-[10px] text-gray-400">King of Shadows</p>
+                </div>
+            </div>
+            <div class="card p-4 rounded-lg flex justify-between items-center">
+                <div>
+                    <span class="text-xs badge-mythic px-2 py-0.5 rounded">MYTHICAL</span>
+                    <h3 class="text-lg font-bold">Yamato</h3>
+                    <p class="text-sm text-gray-500">Demand: ↔️ Stable</p>
+                </div>
+                <div class="text-right">
+                    <p class="value-text">1,000 CR</p>
+                    <p class="text-[10px] text-gray-400">Blade Sovereign</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        function calc(side, p) {
-            if(side === 'y') ySum += p; else tSum += p;
-            document.getElementById('your-total').innerText = ySum.toLocaleString() + " CR";
-            document.getElementById('their-total').innerText = tSum.toLocaleString() + " CR";
-            const diff = ySum - tSum;
-            const s = document.getElementById('calc-status');
-            if(diff > 0) { s.innerText = "L - OVERPAYING"; s.style.color = "#ef4444"; }
-            else if(diff < 0) { s.innerText = "W - MASSIVE WIN"; s.style.color = "#22c55e"; }
-            else { s.innerText = "FAIR TRADE"; s.style.color = "#3b82f6"; }
-        }
+    <section id="ACCESSORY" class="mb-16">
+        <h2 class="text-2xl font-bold mb-6 border-l-4 border-purple-500 pl-4">👑 ACCESSORY</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="card p-4 rounded-lg">
+                <span class="text-xs badge-mythic px-2 py-0.5 rounded">MYTHICAL</span>
+                <h3 class="font-bold">Ice Queen Outfit</h3>
+                <p class="value-text mt-2">1,500 CR</p>
+                <p class="text-xs text-gray-500 mt-1">110% DEF | 87% DMG</p>
+            </div>
+            <div class="card p-4 rounded-lg">
+                <span class="text-xs badge-mythic px-2 py-0.5 rounded">MYTHICAL</span>
+                <h3 class="font-bold">Moon Outfit</h3>
+                <p class="value-text mt-2">1,200 CR</p>
+                <p class="text-xs text-gray-500 mt-1">107% DEF | 85% DMG</p>
+            </div>
+            <div class="card p-4 rounded-lg">
+                <span class="text-xs badge-mythic px-2 py-0.5 rounded">MYTHICAL</span>
+                <h3 class="font-bold">Hollow Mask</h3>
+                <p class="value-text mt-2">60 CR</p>
+                <p class="text-xs text-gray-500 mt-1">50% DEF | 40% DMG</p>
+            </div>
+        </div>
+    </section>
 
-        function search() {
-            const q = document.getElementById('search').value.toLowerCase();
-            render(database.filter(i => i.name.toLowerCase().includes(q)));
-        }
+    <section id="MELEE" class="mb-16">
+        <h2 class="text-2xl font-bold mb-6 border-l-4 border-red-500 pl-4">👊 MELEE</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="card p-4 rounded-lg flex justify-between">
+                <div>
+                    <h3 class="font-bold">Strongest in History</h3>
+                    <p class="text-sm text-gray-400">Sukuna V2 / End-game</p>
+                </div>
+                <p class="value-text">1,400 CR</p>
+            </div>
+            <div class="card p-4 rounded-lg flex justify-between">
+                <div>
+                    <h3 class="font-bold">Demon King (Anos)</h3>
+                    <p class="text-sm text-gray-400">Calamity Scaling</p>
+                </div>
+                <p class="value-text">1,100 CR</p>
+            </div>
+        </div>
+    </section>
 
-        function filterType(type) {
-            if(type === 'all') render(database);
-            else render(database.filter(i => i.type === type));
-        }
+    <section id="ITEMS" class="mb-16">
+        <h2 class="text-2xl font-bold mb-6 border-l-4 border-green-500 pl-4">📦 ITEMS</h2>
+        <div class="overflow-x-auto card rounded-lg">
+            <table class="w-full text-left">
+                <thead class="bg-gray-800">
+                    <tr>
+                        <th class="p-4">Item Name</th>
+                        <th class="p-4">Category</th>
+                        <th class="p-4">Value (CR)</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700">
+                    <tr>
+                        <td class="p-4 font-bold text-yellow-500">2x Drop Pass</td>
+                        <td class="p-4">Gamepass</td>
+                        <td class="p-4 value-text">450,000 CR</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4">Aura Crate</td>
+                        <td class="p-4">Cosmetic</td>
+                        <td class="p-4 value-text">20 CR</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4">Dungeon Key</td>
+                        <td class="p-4">Utility</td>
+                        <td class="p-4 value-text">5 CR</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-        render(database);
-    </script>
+    <footer class="text-center text-gray-600 text-sm mt-20">
+        Created for BoopaPengu | Values are subject to change.
+    </footer>
+
 </body>
 </html>
