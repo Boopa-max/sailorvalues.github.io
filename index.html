@@ -3,215 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boopa Analytics | Sailor Piece Values</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Boopa Analytics | Ultra Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #08090d;
-            --card-bg: rgba(20, 23, 31, 0.85);
+            /* Default Dark Theme */
+            --bg: #0a0b10;
+            --card: rgba(20, 24, 33, 0.9);
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
             --accent: #6366f1;
-            --border: #2dd4bf;
-            --text-main: #f8fafc;
-            --text-muted: #64748b;
-            --danger: #ef4444;
+            --border: rgba(255, 255, 255, 0.08);
+            --nav-bg: rgba(10, 11, 16, 0.8);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { 
-            background-color: var(--bg-color); 
-            color: var(--text-main); 
-            max-width: 1366px; 
-            margin: 0 auto; 
-            min-height: 100vh;
+        [data-theme="light"] {
+            --bg: #f1f5f9;
+            --card: rgba(255, 255, 255, 0.9);
+            --text: #0f172a;
+            --text-dim: #64748b;
+            --accent: #4f46e5;
+            --border: rgba(0, 0, 0, 0.08);
+            --nav-bg: rgba(241, 245, 249, 0.8);
         }
 
-        /* Aesthetics */
-        .bg-glow {
-            position: fixed; width: 600px; height: 600px; border-radius: 50%;
-            filter: blur(120px); opacity: 0.1; z-index: -1; animation: pulse 15s infinite alternate;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background 0.3s, color 0.3s; }
+        body { background-color: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* --- THEME TOGGLE --- */
+        .theme-switch {
+            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+            background: var(--accent); color: white; border: none;
+            padding: 12px 20px; border-radius: 30px; cursor: pointer;
+            font-weight: 800; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
-        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
-        /* Header & Analytics */
-        header { padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(to right, #818cf8, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .analytics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 2rem; }
-        .stat-box { background: var(--card-bg); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center; backdrop-filter: blur(10px); }
-        .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--border); }
-
-        /* Navigation */
-        .nav-bar { padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .search-input { background: #1a1d24; border: 1px solid #334155; color: white; padding: 0.8rem 1.2rem; border-radius: 10px; width: 350px; outline: none; transition: 0.3s; }
-        .search-input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
-        .filter-group { display: flex; gap: 0.5rem; }
-        .btn { background: #1a1d24; border: 1px solid #334155; color: var(--text-muted); padding: 0.8rem 1.2rem; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; }
-        .btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-
-        /* Grid */
-        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; padding: 0 2rem 2rem; }
-        .card { 
-            background: var(--card-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); 
-            transition: 0.3s; animation: slideUp 0.5s ease forwards;
+        header {
+            padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; background: var(--nav-bg); backdrop-filter: blur(10px);
+            z-index: 100; border-bottom: 1px solid var(--border);
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .card:hover { border-color: var(--accent); transform: scale(1.02); }
-        
-        .tag { font-size: 0.7rem; font-weight: 800; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 0.5rem; display: inline-block; }
-        .tag-sword { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-        .tag-acc { background: rgba(45, 212, 191, 0.1); color: #2dd4bf; }
 
-        /* Admin */
-        .admin-box { display: none; background: #1e1b4b; margin: 0 2rem 2rem; padding: 1.5rem; border-radius: 15px; border: 1px solid var(--accent); }
-        .login-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 999; backdrop-filter: blur(5px); }
-        .login-content { background: #1a1d24; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--accent); width: 320px; text-align: center; }
+        .logo { font-size: 1.2rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }
+
+        /* --- ITEM CARDS --- */
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem; padding: 2rem;
+        }
+
+        .card {
+            background: var(--card); border-radius: 20px; overflow: hidden;
+            border: 1px solid var(--border); position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .card-image {
+            height: 180px; width: 100%; background-size: cover; background-position: center;
+            position: relative; background-color: #222;
+        }
+
+        /* Overlay for text readability on images */
+        .card-image::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent, var(--card));
+        }
+
+        .card-content { padding: 1.5rem; position: relative; z-index: 2; margin-top: -40px; }
+
+        .type-tag {
+            font-size: 10px; font-weight: 900; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .item-val { font-size: 1.5rem; font-weight: 900; color: #10b981; }
+
+        /* --- ADMIN & CONTROLS --- */
+        .search-area { padding: 2rem 2rem 0; }
+        input {
+            width: 100%; max-width: 400px; padding: 12px 20px; border-radius: 12px;
+            background: var(--card); border: 1px solid var(--border); color: var(--text);
+        }
+
+        .admin-panel {
+            background: var(--card); margin: 2rem; padding: 1.5rem; border-radius: 15px;
+            border: 2px dashed var(--accent); display: none;
+        }
+
+        .active-admin { display: block !important; }
     </style>
 </head>
-<body>
-    <div class="bg-glow" style="background:var(--accent); top:-10%; left:-5%;"></div>
-    <div class="bg-glow" style="background:var(--border); bottom:-10%; right:-5%; animation-delay:-5s;"></div>
+<body data-theme="dark">
+
+    <button class="theme-switch" onclick="toggleTheme()">🌓 TOGGLE THEME</button>
 
     <header>
-        <div class="logo">BOOPA PIECE VALUES</div>
-        <button onclick="document.getElementById('loginModal').style.display='flex'" class="btn" style="font-size: 0.8rem;">ADMIN LOGIN</button>
+        <div class="logo">BOOPA <span style="color:var(--accent)">PIECE</span></div>
+        <button onclick="showLogin()" style="background:none; border:none; color:var(--text-dim); cursor:pointer; font-weight:bold;">ADMIN</button>
     </header>
 
-    <div class="analytics">
-        <div class="stat-box"><div class="stat-num" id="totalCount">0</div><div style="font-size:0.7rem; color:var(--text-muted);">TOTAL ITEMS</div></div>
-        <div class="stat-box"><div class="stat-num" id="swordCount" style="color:#ef4444;">0</div><div style="font-size:0.7rem; color:var(--text-muted);">SWORDS</div></div>
-        <div class="stat-box"><div class="stat-num" id="accCount" style="color:#2dd4bf;">0</div><div style="font-size:0.7rem; color:var(--text-muted);">ACCESSORIES</div></div>
-    </div>
-
-    <div class="nav-bar">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search item or category...">
-        <div class="filter-group">
-            <button class="btn active" onclick="filterData('ALL', this)">ALL</button>
-            <button class="btn" onclick="filterData('SWORD', this)">SWORDS</button>
-            <button class="btn" onclick="filterData('ACCESSORY', this)">ACCESSORIES</button>
-        </div>
-    </div>
-
-    <div class="admin-box" id="adminPanel">
-        <h3 style="margin-bottom:1rem; color:var(--border);">Owner Terminal</h3>
-        <form id="addForm" style="display:flex; gap:10px; flex-wrap:wrap;">
-            <input type="text" id="n" placeholder="Item Name" required>
-            <select id="t"><option value="ACCESSORY">Accessory</option><option value="SWORD">Sword</option></select>
-            <input type="number" id="v" placeholder="Value (Numbers)" required>
-            <input type="number" id="d" placeholder="Demand (1-10)" required>
-            <button type="submit" class="btn" style="background:var(--accent); color:white;">ADD TO DATABASE</button>
-            <button type="button" onclick="logout()" class="btn" style="background:var(--danger); color:white;">LOGOUT</button>
+    <div class="admin-panel" id="adminPanel">
+        <h2 style="margin-bottom:1rem;">Add Premium Item</h2>
+        <form id="addForm" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            <input type="text" id="itemName" placeholder="Item Name" required>
+            <input type="text" id="itemImg" placeholder="Image URL (Roblox Decal Link)">
+            <select id="itemType" style="padding:10px; border-radius:8px; background:var(--bg); color:var(--text);">
+                <option value="SWORD">Sword</option>
+                <option value="ACCESSORY">Accessory</option>
+            </select>
+            <input type="number" id="itemValue" placeholder="Value">
+            <button type="submit" style="grid-column: span 2; padding:12px; background:var(--accent); color:white; border:none; border-radius:8px; cursor:pointer;">SAVE TO DATABASE</button>
         </form>
     </div>
 
-    <div class="item-grid" id="grid"></div>
-
-    <div class="login-modal" id="loginModal">
-        <div class="login-content">
-            <h2 style="margin-bottom:1.5rem;">Owner Access</h2>
-            <input type="password" id="pass" placeholder="Password" style="width:100%; margin-bottom:1rem; background:#08090d; border:1px solid #334155; padding:10px; color:white; border-radius:8px;">
-            <button onclick="login()" class="btn" style="width:100%; background:var(--accent); color:white;">ENTER</button>
-            <p onclick="document.getElementById('loginModal').style.display='none'" style="margin-top:1rem; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">Close</p>
-        </div>
+    <div class="search-area">
+        <input type="text" id="searchInput" placeholder="Search weapons & gear...">
     </div>
 
+    <div class="grid" id="itemGrid"></div>
+
     <script>
-        const PASS = "BOOPA_OWNER_2026";
-        
-        // --- THE OFFICIAL ITEM LIST ---
-        const initialDatabase = [
-            { id: 1, name: "Atomic (with sigil)", type: "SWORD", value: 1086, demand: 8 },
-            { id: 2, name: "Ragna Set", type: "ACCESSORY", value: 1650000, demand: 10 },
-            { id: 3, name: "Madoka Set", type: "ACCESSORY", value: 825000, demand: 9 },
-            { id: 4, name: "Saber v2", type: "SWORD", value: 2184, demand: 1 },
-            { id: 5, name: "Kokushibo", type: "SWORD", value: 2092, demand: 3 },
-            { id: 6, name: "Esdeath Set", type: "ACCESSORY", value: 2230, demand: 3 },
-            { id: 7, name: "Madara Set", type: "ACCESSORY", value: 2050, demand: 3 },
-            { id: 8, name: "Gilgamesh", type: "ACCESSORY", value: 1116, demand: 2 },
-            { id: 9, name: "Cid v2 Set", type: "ACCESSORY", value: 1002, demand: 3 },
-            { id: 10, name: "Aizen v2", type: "ACCESSORY", value: 1530, demand: 2 }
+        // Default items with placeholder background images
+        const defaultItems = [
+            { id: 1, name: "Ragna Set", type: "ACCESSORY", value: 1650000, img: "https://images.rbxcdn.com/f02e86f8a8b16e167e89133c94f5b5b0.png" },
+            { id: 2, name: "Atomic Sword", type: "SWORD", value: 1086, img: "https://images.rbxcdn.com/6c0b368c8188151591c2b8c9d09a2b8e.png" },
+            { id: 3, name: "Madoka Set", type: "ACCESSORY", value: 825000, img: "https://images.rbxcdn.com/8390b1c098c8c8872b8c8f0e0e0e0e0e.png" }
         ];
 
-        let db = JSON.parse(localStorage.getItem('boopaDB')) || initialDatabase;
-        let filter = 'ALL';
+        let db = JSON.parse(localStorage.getItem('themeDB')) || defaultItems;
+
+        function toggleTheme() {
+            const body = document.body;
+            const current = body.getAttribute('data-theme');
+            body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
 
         function render() {
-            const grid = document.getElementById('grid');
+            const grid = document.getElementById('itemGrid');
             const search = document.getElementById('searchInput').value.toLowerCase();
             grid.innerHTML = '';
 
-            const filtered = db.filter(i => {
-                const matchF = filter === 'ALL' || i.type === filter;
-                const matchS = i.name.toLowerCase().includes(search);
-                return matchF && matchS;
-            });
-
-            filtered.forEach(item => {
+            db.filter(i => i.name.toLowerCase().includes(search)).forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                const tagClass = item.type === 'SWORD' ? 'tag-sword' : 'tag-acc';
                 card.innerHTML = `
-                    <span class="tag ${tagClass}">${item.type}</span>
-                    <h2 style="margin-bottom:1rem;">${item.name}</h2>
-                    <div style="display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.05); padding-top:1rem;">
-                        <div><p style="font-size:0.6rem; color:var(--text-muted);">VALUE</p><b>${item.value.toLocaleString()}</b></div>
-                        <div style="text-align:right;"><p style="font-size:0.6rem; color:var(--text-muted);">DEMAND</p><b>${item.demand}/10</b></div>
+                    <div class="card-image" style="background-image: url('${item.img || 'https://via.placeholder.com/400x200?text=No+Image'}')"></div>
+                    <div class="card-content">
+                        <p class="type-tag">${item.type}</p>
+                        <h2 style="margin: 5px 0 15px 0;">${item.name}</h2>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <p style="font-size:10px; color:var(--text-dim);">MARKET VALUE</p>
+                                <p class="item-val">${item.value.toLocaleString()}</p>
+                            </div>
+                            <button onclick="deleteItem(${item.id})" style="display:${sessionStorage.getItem('isAdmin') ? 'block' : 'none'}; color:red; background:none; border:none; cursor:pointer;">Delete</button>
+                        </div>
                     </div>
-                    ${sessionStorage.getItem('admin') ? `<button onclick="del(${item.id})" style="color:red; background:none; border:none; margin-top:10px; font-size:10px; cursor:pointer;">Remove</button>` : ''}
                 `;
                 grid.appendChild(card);
             });
-
-            // Update Analytics
-            document.getElementById('totalCount').innerText = db.length;
-            document.getElementById('swordCount').innerText = db.filter(i => i.type === 'SWORD').length;
-            document.getElementById('accCount').innerText = db.filter(i => i.type === 'ACCESSORY').length;
         }
 
-        function filterData(type, btn) {
-            filter = type;
-            document.querySelectorAll('.filter-group .btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            render();
-        }
-
-        function login() {
-            if(document.getElementById('pass').value === PASS) {
-                sessionStorage.setItem('admin', 'true');
-                document.getElementById('adminPanel').style.display = 'block';
-                document.getElementById('loginModal').style.display = 'none';
+        function showLogin() {
+            const pass = prompt("Enter Admin Password:");
+            if(pass === "BOOPA_OWNER_2026") {
+                sessionStorage.setItem('isAdmin', 'true');
+                document.getElementById('adminPanel').classList.add('active-admin');
                 render();
-            } else { alert("Wrong Password!"); }
+            }
         }
 
-        function logout() {
-            sessionStorage.removeItem('admin');
-            location.reload();
-        }
-
-        window.del = (id) => {
+        window.deleteItem = (id) => {
             db = db.filter(i => i.id !== id);
-            localStorage.setItem('boopaDB', JSON.stringify(db));
+            localStorage.setItem('themeDB', JSON.stringify(db));
             render();
         };
 
         document.getElementById('addForm').onsubmit = (e) => {
             e.preventDefault();
-            db.push({
+            const newItem = {
                 id: Date.now(),
-                name: document.getElementById('n').value,
-                type: document.getElementById('t').value,
-                value: parseInt(document.getElementById('v').value),
-                demand: parseInt(document.getElementById('d').value)
-            });
-            localStorage.setItem('boopaDB', JSON.stringify(db));
+                name: document.getElementById('itemName').value,
+                img: document.getElementById('itemImg').value,
+                type: document.getElementById('itemType').value,
+                value: parseInt(document.getElementById('itemValue').value)
+            };
+            db.push(newItem);
+            localStorage.setItem('themeDB', JSON.stringify(db));
             render();
             e.target.reset();
         };
 
         document.getElementById('searchInput').oninput = render;
-        
-        // Initial Startup
-        if(sessionStorage.getItem('admin')) document.getElementById('adminPanel').style.display = 'block';
         render();
     </script>
 </body>
