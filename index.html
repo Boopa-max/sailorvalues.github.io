@@ -3,160 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boopa Analytics | Ultra Theme</title>
+    <title>Boopa Analytics | Sailor Piece Values</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Default Dark Theme */
             --bg: #0a0b10;
             --card: rgba(20, 24, 33, 0.9);
             --text: #f8fafc;
             --text-dim: #94a3b8;
             --accent: #6366f1;
             --border: rgba(255, 255, 255, 0.08);
-            --nav-bg: rgba(10, 11, 16, 0.8);
+            --green: #10b981;
         }
 
         [data-theme="light"] {
             --bg: #f1f5f9;
-            --card: rgba(255, 255, 255, 0.9);
+            --card: rgba(255, 255, 255, 0.95);
             --text: #0f172a;
             --text-dim: #64748b;
             --accent: #4f46e5;
             --border: rgba(0, 0, 0, 0.08);
-            --nav-bg: rgba(241, 245, 249, 0.8);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background 0.3s, color 0.3s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.3s; }
         body { background-color: var(--bg); color: var(--text); min-height: 100vh; }
-
-        /* --- THEME TOGGLE --- */
-        .theme-switch {
-            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
-            background: var(--accent); color: white; border: none;
-            padding: 12px 20px; border-radius: 30px; cursor: pointer;
-            font-weight: 800; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
 
         header {
             padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; background: var(--nav-bg); backdrop-filter: blur(10px);
-            z-index: 100; border-bottom: 1px solid var(--border);
+            background: var(--card); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
         }
 
-        .logo { font-size: 1.2rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }
+        .logo { font-size: 1.2rem; font-weight: 900; letter-spacing: -1px; }
 
-        /* --- ITEM CARDS --- */
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem; padding: 2rem;
+        /* Controls */
+        .controls { padding: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .search-input { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px 20px; border-radius: 12px; width: 300px; outline: none; }
+        .filter-btns { display: flex; gap: 0.5rem; }
+        .btn { padding: 10px 18px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text-dim); cursor: pointer; font-weight: 600; }
+        .btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+        /* Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; padding: 0 2rem 2rem; }
+        .card { 
+            background: var(--card); border-radius: 20px; border: 1px solid var(--border); 
+            overflow: hidden; position: relative; animation: popIn 0.5s ease;
         }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        .card {
-            background: var(--card); border-radius: 20px; overflow: hidden;
-            border: 1px solid var(--border); position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        .item-img { 
+            height: 200px; width: 100%; 
+            background-size: contain; background-repeat: no-repeat; background-position: center; 
+            background-color: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border);
         }
+        .content { padding: 1.5rem; }
+        .category-tag { font-size: 10px; font-weight: 900; color: var(--accent); margin-bottom: 5px; display: block; }
+        .val { font-size: 1.4rem; font-weight: 900; color: var(--green); }
 
-        .card-image {
-            height: 180px; width: 100%; background-size: cover; background-position: center;
-            position: relative; background-color: #222;
-        }
-
-        /* Overlay for text readability on images */
-        .card-image::after {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to bottom, transparent, var(--card));
-        }
-
-        .card-content { padding: 1.5rem; position: relative; z-index: 2; margin-top: -40px; }
-
-        .type-tag {
-            font-size: 10px; font-weight: 900; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-
-        .item-val { font-size: 1.5rem; font-weight: 900; color: #10b981; }
-
-        /* --- ADMIN & CONTROLS --- */
-        .search-area { padding: 2rem 2rem 0; }
-        input {
-            width: 100%; max-width: 400px; padding: 12px 20px; border-radius: 12px;
-            background: var(--card); border: 1px solid var(--border); color: var(--text);
-        }
-
-        .admin-panel {
-            background: var(--card); margin: 2rem; padding: 1.5rem; border-radius: 15px;
-            border: 2px dashed var(--accent); display: none;
-        }
-
-        .active-admin { display: block !important; }
+        /* Admin UI */
+        .admin-panel { display: none; margin: 0 2rem 2rem; padding: 1.5rem; border: 2px dashed var(--accent); border-radius: 15px; background: var(--card); }
+        
+        .theme-btn { position: fixed; bottom: 20px; left: 20px; padding: 12px; border-radius: 50%; width: 50px; height: 50px; background: var(--accent); color: white; border: none; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body data-theme="dark">
 
-    <button class="theme-switch" onclick="toggleTheme()">🌓 TOGGLE THEME</button>
+    <button class="theme-btn" onclick="toggleTheme()">🌓</button>
 
     <header>
-        <div class="logo">BOOPA <span style="color:var(--accent)">PIECE</span></div>
-        <button onclick="showLogin()" style="background:none; border:none; color:var(--text-dim); cursor:pointer; font-weight:bold;">ADMIN</button>
+        <div class="logo">BOOPA <span style="color:var(--accent)">ANALYSIS</span></div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="showLogin()" style="font-size:11px;">OWNER LOGIN</button>
+        </div>
     </header>
 
-    <div class="admin-panel" id="adminPanel">
-        <h2 style="margin-bottom:1rem;">Add Premium Item</h2>
-        <form id="addForm" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-            <input type="text" id="itemName" placeholder="Item Name" required>
-            <input type="text" id="itemImg" placeholder="Image URL (Roblox Decal Link)">
-            <select id="itemType" style="padding:10px; border-radius:8px; background:var(--bg); color:var(--text);">
-                <option value="SWORD">Sword</option>
-                <option value="ACCESSORY">Accessory</option>
-            </select>
-            <input type="number" id="itemValue" placeholder="Value">
-            <button type="submit" style="grid-column: span 2; padding:12px; background:var(--accent); color:white; border:none; border-radius:8px; cursor:pointer;">SAVE TO DATABASE</button>
-        </form>
+    <div class="controls">
+        <input type="text" class="search-input" id="search" placeholder="Search weapons/armor...">
+        <div class="filter-btns">
+            <button class="btn active" onclick="setFilter('ALL', this)">ALL</button>
+            <button class="btn" onclick="setFilter('SWORD', this)">SWORDS</button>
+            <button class="btn" onclick="setFilter('ACCESSORY', this)">ACCESSORIES</button>
+        </div>
     </div>
 
-    <div class="search-area">
-        <input type="text" id="searchInput" placeholder="Search weapons & gear...">
+    <div class="admin-panel" id="adminPanel">
+        <h3 style="margin-bottom:1rem;">Add New Asset</h3>
+        <form id="addForm" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:10px;">
+            <input type="text" id="addName" placeholder="Name" required class="search-input" style="width:100%">
+            <input type="text" id="addImg" placeholder="Image URL" class="search-input" style="width:100%">
+            <select id="addType" class="search-input" style="width:100%"><option value="SWORD">SWORD</option><option value="ACCESSORY">ACCESSORY</option></select>
+            <input type="number" id="addVal" placeholder="Value" required class="search-input" style="width:100%">
+            <button type="submit" class="btn" style="background:var(--accent); color:white;">SAVE ITEM</button>
+        </form>
     </div>
 
     <div class="grid" id="itemGrid"></div>
 
     <script>
-        // Default items with placeholder background images
-        const defaultItems = [
-            { id: 1, name: "Ragna Set", type: "ACCESSORY", value: 1650000, img: "https://images.rbxcdn.com/f02e86f8a8b16e167e89133c94f5b5b0.png" },
-            { id: 2, name: "Atomic Sword", type: "SWORD", value: 1086, img: "https://images.rbxcdn.com/6c0b368c8188151591c2b8c9d09a2b8e.png" },
-            { id: 3, name: "Madoka Set", type: "ACCESSORY", value: 825000, img: "https://images.rbxcdn.com/8390b1c098c8c8872b8c8f0e0e0e0e0e.png" }
+        // --- THE DATABASE ---
+        const sailorItems = [
+            { id: 1, name: "Atomic (with sigil)", type: "SWORD", value: 1086, img: "https://sailor-piece.vaultedvaluesx.com/_next/image?url=https%3A%2F%2Fcdn.discordapp.com%2Fattachments%2F1223395995403063467%2F1224719266710978600%2FAtomic_Sigil.png&w=256&q=75" },
+            { id: 2, name: "Ragna Set", type: "ACCESSORY", value: 1650000, img: "https://sailor-piece.vaultedvaluesx.com/_next/image?url=https%3A%2F%2Fcdn.discordapp.com%2Fattachments%2F1223395995403063467%2F1224720188602224710%2FRagna_Set.png&w=256&q=75" },
+            { id: 3, name: "Saber v2 (Set)", type: "SWORD", value: 2184, img: "https://sailor-piece.vaultedvaluesx.com/_next/image?url=https%3A%2F%2Fcdn.discordapp.com%2Fattachments%2F1223395995403063467%2F1224719463935541248%2FSaber_v2.png&w=256&q=75" },
+            { id: 4, name: "Madoka Set", type: "ACCESSORY", value: 835000, img: "https://sailor-piece.vaultedvaluesx.com/_next/image?url=https%3A%2F%2Fcdn.discordapp.com%2Fattachments%2F1223395995403063467%2F1224720111166984252%2FMadoka_Set.png&w=256&q=75" },
+            { id: 5, name: "Kokushibo (Set)", type: "SWORD", value: 2092, img: "https://sailor-piece.vaultedvaluesx.com/_next/image?url=https%3A%2F%2Fcdn.discordapp.com%2Fattachments%2F1223395995403063467%2F1224719363071352862%2FKokushibo.png&w=256&q=75" },
+            { id: 6, name: "Madara Set", type: "ACCESSORY", value: 2050, img: "https://sailor-piece.vaultedvaluesx.com/_next/image?url=https%3A%2F%2Fcdn.discordapp.com%2Fattachments%2F1223395995403063467%2F1224719416552914944%2FMadara.png&w=256&q=75" }
         ];
 
-        let db = JSON.parse(localStorage.getItem('themeDB')) || defaultItems;
+        let db = JSON.parse(localStorage.getItem('boopaFinalDB')) || sailorItems;
+        let activeFilter = 'ALL';
 
         function toggleTheme() {
-            const body = document.body;
-            const current = body.getAttribute('data-theme');
-            body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+            const b = document.body;
+            b.setAttribute('data-theme', b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        }
+
+        function showLogin() {
+            if(prompt("Admin Password:") === "BOOPA_OWNER_2026") {
+                sessionStorage.setItem('isAdmin', 'true');
+                document.getElementById('adminPanel').style.display = 'block';
+                render();
+            }
         }
 
         function render() {
             const grid = document.getElementById('itemGrid');
-            const search = document.getElementById('searchInput').value.toLowerCase();
+            const search = document.getElementById('search').value.toLowerCase();
             grid.innerHTML = '';
 
-            db.filter(i => i.name.toLowerCase().includes(search)).forEach(item => {
+            const filtered = db.filter(i => {
+                const f = activeFilter === 'ALL' || i.type === activeFilter;
+                const s = i.name.toLowerCase().includes(search);
+                return f && s;
+            });
+
+            filtered.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
-                    <div class="card-image" style="background-image: url('${item.img || 'https://via.placeholder.com/400x200?text=No+Image'}')"></div>
-                    <div class="card-content">
-                        <p class="type-tag">${item.type}</p>
-                        <h2 style="margin: 5px 0 15px 0;">${item.name}</h2>
+                    <div class="item-img" style="background-image: url('${item.img}')"></div>
+                    <div class="content">
+                        <span class="category-tag">${item.type}</span>
+                        <h2 style="margin-bottom:10px;">${item.name}</h2>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <p style="font-size:10px; color:var(--text-dim);">MARKET VALUE</p>
-                                <p class="item-val">${item.value.toLocaleString()}</p>
+                                <p style="font-size:10px; color:var(--text-dim);">VALUE</p>
+                                <p class="val">${item.value.toLocaleString()}</p>
                             </div>
-                            <button onclick="deleteItem(${item.id})" style="display:${sessionStorage.getItem('isAdmin') ? 'block' : 'none'}; color:red; background:none; border:none; cursor:pointer;">Delete</button>
+                            ${sessionStorage.getItem('isAdmin') ? `<button onclick="del(${item.id})" style="color:red; background:none; border:none; cursor:pointer; font-size:10px;">Remove</button>` : ''}
                         </div>
                     </div>
                 `;
@@ -164,37 +158,34 @@
             });
         }
 
-        function showLogin() {
-            const pass = prompt("Enter Admin Password:");
-            if(pass === "BOOPA_OWNER_2026") {
-                sessionStorage.setItem('isAdmin', 'true');
-                document.getElementById('adminPanel').classList.add('active-admin');
-                render();
-            }
+        function setFilter(f, btn) {
+            activeFilter = f;
+            document.querySelectorAll('.filter-btns .btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            render();
         }
 
-        window.deleteItem = (id) => {
+        window.del = (id) => {
             db = db.filter(i => i.id !== id);
-            localStorage.setItem('themeDB', JSON.stringify(db));
+            localStorage.setItem('boopaFinalDB', JSON.stringify(db));
             render();
         };
 
         document.getElementById('addForm').onsubmit = (e) => {
             e.preventDefault();
-            const newItem = {
+            db.push({
                 id: Date.now(),
-                name: document.getElementById('itemName').value,
-                img: document.getElementById('itemImg').value,
-                type: document.getElementById('itemType').value,
-                value: parseInt(document.getElementById('itemValue').value)
-            };
-            db.push(newItem);
-            localStorage.setItem('themeDB', JSON.stringify(db));
+                name: document.getElementById('addName').value,
+                img: document.getElementById('addImg').value,
+                type: document.getElementById('addType').value,
+                value: parseInt(document.getElementById('addVal').value)
+            });
+            localStorage.setItem('boopaFinalDB', JSON.stringify(db));
             render();
             e.target.reset();
         };
 
-        document.getElementById('searchInput').oninput = render;
+        document.getElementById('search').oninput = render;
         render();
     </script>
 </body>
