@@ -7,13 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f1115;
-            --card-bg: #1a1d24;
+            --bg-color: #0b0d11;
+            --card-bg: rgba(26, 29, 36, 0.8);
             --accent: #6366f1;
             --accent-hover: #4f46e5;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border: #2dd4bf;
+            --admin-bg: rgba(30, 27, 75, 0.9);
         }
 
         * {
@@ -26,20 +27,61 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            /* Optimized for 1366x768 screens */
             max-width: 1366px;
             margin: 0 auto;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
         }
 
+        /* --- BACKGROUND ANIMATION --- */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(45, 212, 191, 0.05) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        /* Animated floating orbs */
+        .bg-animate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: move 20s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(20%, 20%); }
+        }
+
+        /* --- HEADER --- */
         header {
             padding: 1.5rem 2rem;
+            background: rgba(11, 13, 17, 0.7);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
@@ -49,205 +91,220 @@
             background: linear-gradient(to right, #818cf8, #2dd4bf);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: fadeIn 0.8s ease-out;
         }
 
-        main {
-            padding: 2rem;
-            flex: 1;
+        /* --- ADMIN PANEL --- */
+        .admin-panel {
+            background-color: var(--admin-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem;
+            display: none;
+            animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+        .admin-panel.visible { display: block; }
 
-        input[type="text"] {
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            background-color: var(--card-bg);
-            color: var(--text-main);
-            width: 300px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--accent);
-        }
-
-        .filters {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        button {
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            border: none;
-            background-color: var(--card-bg);
-            color: var(--text-muted);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        button:hover {
-            color: var(--text-main);
-            background-color: #334155;
-        }
-
-        button.active {
-            background-color: var(--accent);
-            color: #fff;
-        }
-
-        .item-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
+        /* --- ITEM CARDS ANIMATION --- */
         .item-card {
             background-color: var(--card-bg);
+            backdrop-filter: blur(5px);
             border-radius: 12px;
             padding: 1.5rem;
             border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease;
+            animation: cardEntrance 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-20px); } 
+            to { opacity: 1; transform: translateY(0); } 
         }
 
         .item-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             border-color: var(--accent);
+            background: rgba(30, 34, 42, 0.9);
         }
 
-        .item-type {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--border);
-            margin-bottom: 0.5rem;
-            display: inline-block;
+        /* --- UTILS --- */
+        .admin-toggle {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
         }
 
-        .item-name {
-            font-size: 1.25rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
+        .admin-toggle:hover { background: var(--accent); color: white; }
 
-        .item-stats {
+        .controls {
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
-            font-size: 0.875rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            margin: 2rem 0;
+            gap: 1rem;
         }
 
-        .stat-label {
-            color: var(--text-muted);
+        input, select, .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            outline: none;
         }
 
-        .stat-value {
-            font-weight: 600;
-            color: #fff;
+        .filter-btn.active { background: var(--accent); border-color: var(--accent); }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem 2rem 2rem;
         }
 
-        .value-high {
-            color: #fbbf24;
-        }
+        .value-high { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }
+
     </style>
 </head>
 <body>
 
+    <div class="bg-animate">
+        <div class="orb" style="background: var(--accent); top: -10%; left: -10%;"></div>
+        <div class="orb" style="background: var(--border); bottom: -10%; right: -10%; animation-delay: -5s;"></div>
+    </div>
+
     <header>
-        <div class="logo">YOUR COMPANY</div>
-        <div style="font-size: 0.875rem; color: var(--text-muted);">Sailor Piece Market DB</div>
+        <div class="logo">BOOPA PIECE VALUES</div>
+        <button class="admin-toggle" id="adminToggleBtn">Admin Access</button>
     </header>
 
     <main>
+        <div class="admin-panel" id="adminPanel">
+            <h3 style="margin-bottom:1rem;">Add New Item</h3>
+            <form id="addItemForm" style="display:flex; gap:10px; flex-wrap:wrap;">
+                <input type="text" id="itemName" placeholder="Item Name" required>
+                <select id="itemType" required>
+                    <option value="ITEMS.ACCESSORY">Accessory</option>
+                    <option value="MELEE.SWORD">Sword</option>
+                </select>
+                <input type="text" id="itemValue" placeholder="Value">
+                <input type="text" id="itemDemand" placeholder="Demand">
+                <button type="submit" class="admin-toggle" style="background:var(--accent); color:white;">Add to List</button>
+            </form>
+        </div>
+
         <div class="controls">
-            <input type="text" id="searchInput" placeholder="Search items...">
-            <div class="filters">
-                <button class="active" data-filter="ALL">All Items</button>
-                <button data-filter="ITEMS.ACCESSORY">Accessories</button>
-                <button data-filter="MELEE.SWORD">Swords</button>
+            <input type="text" id="searchInput" placeholder="Search the value list..." style="width: 350px;">
+            <div style="display:flex; gap:10px;">
+                <button class="filter-btn active" data-filter="ALL">All</button>
+                <button class="filter-btn" data-filter="ITEMS.ACCESSORY">Accessories</button>
+                <button class="filter-btn" data-filter="MELEE.SWORD">Swords</button>
             </div>
         </div>
 
-        <div class="item-grid" id="itemGrid">
-            </div>
+        <div class="item-grid" id="itemGrid"></div>
     </main>
 
     <script>
-        // Data structure. You can easily expand this list with the remaining 180+ items from the value list.
-        const itemsData = [
-            { name: "Ragna Set", type: "ITEMS.ACCESSORY", value: "1.65M", demand: "High - 10" },
-            { name: "Madoka Set", type: "ITEMS.ACCESSORY", value: "825K - 850K", demand: "High - 9" },
-            { name: "Atomic (with sigil)", type: "MELEE.SWORD", value: "1,086", demand: "Moderate - 8" },
-            { name: "Kokushibo", type: "MELEE.SWORD", value: "2,092", demand: "Medium - 3" },
-            { name: "Saber v2", type: "MELEE.SWORD", value: "2,184", demand: "Medium - 1" },
-            { name: "Esdeath", type: "ITEMS.ACCESSORY", value: "2,230", demand: "Medium - 3" }
+        const defaultItems = [
+            { id: 1, name: "Ragna Set", type: "ITEMS.ACCESSORY", value: "1.65M", demand: "High - 10" },
+            { id: 2, name: "Madoka Set", type: "ITEMS.ACCESSORY", value: "825K", demand: "High - 9" },
+            { id: 3, name: "Atomic Sword", type: "MELEE.SWORD", value: "1,086", demand: "Moderate - 8" }
         ];
 
-        const itemGrid = document.getElementById('itemGrid');
-        const searchInput = document.getElementById('searchInput');
-        const filterButtons = document.querySelectorAll('.filters button');
-
+        let itemsData = JSON.parse(localStorage.getItem('sailorPieceItems')) || defaultItems;
         let currentFilter = 'ALL';
         let searchQuery = '';
 
-        function renderItems() {
-            itemGrid.innerHTML = '';
+        function render() {
+            const grid = document.getElementById('itemGrid');
+            grid.innerHTML = '';
             
-            const filtered = itemsData.filter(item => {
-                const matchesFilter = currentFilter === 'ALL' || item.type === currentFilter;
-                const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
-                return matchesFilter && matchesSearch;
+            const filtered = itemsData.filter(i => {
+                const f = currentFilter === 'ALL' || i.type === currentFilter;
+                const s = i.name.toLowerCase().includes(searchQuery.toLowerCase());
+                return f && s;
             });
 
-            filtered.forEach(item => {
+            filtered.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'item-card';
+                // Staggered animation effect
+                card.style.animationDelay = `${index * 0.05}s`;
                 card.innerHTML = `
-                    <span class="item-type">${item.type.replace('.', ' ')}</span>
-                    <div class="item-name">${item.name}</div>
-                    <div class="item-stats">
+                    <div style="display:flex; justify-content:space-between; align-items:start;">
+                        <span style="color:var(--border); font-size:10px; font-weight:bold;">${item.type}</span>
+                    </div>
+                    <h2 style="margin: 10px 0 20px 0;">${item.name}</h2>
+                    <div style="display:flex; justify-content:space-between; border-top:1px solid #333; padding-top:15px;">
                         <div>
-                            <div class="stat-label">CRR Value</div>
-                            <div class="stat-value value-high">${item.value}</div>
+                            <p style="color:var(--text-muted); font-size:12px;">VALUE</p>
+                            <p class="value-high">${item.value}</p>
                         </div>
-                        <div style="text-align: right;">
-                            <div class="stat-label">Demand</div>
-                            <div class="stat-value">${item.demand}</div>
+                        <div style="text-align:right;">
+                            <p style="color:var(--text-muted); font-size:12px;">DEMAND</p>
+                            <p>${item.demand}</p>
                         </div>
                     </div>
                 `;
-                itemGrid.appendChild(card);
+                grid.appendChild(card);
             });
         }
 
-        searchInput.addEventListener('input', (e) => {
+        // Search logic
+        document.getElementById('searchInput').addEventListener('input', e => {
             searchQuery = e.target.value;
-            renderItems();
+            render();
         });
 
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                currentFilter = button.getAttribute('data-filter');
-                renderItems();
+        // Filter logic
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                render();
             });
         });
 
-        // Initial Render
-        renderItems();
+        // Admin Toggle
+        document.getElementById('adminToggleBtn').addEventListener('click', () => {
+            document.getElementById('adminPanel').classList.toggle('visible');
+        });
+
+        // Add Item logic
+        document.getElementById('addItemForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const newItem = {
+                id: Date.now(),
+                name: document.getElementById('itemName').value,
+                type: document.getElementById('itemType').value,
+                value: document.getElementById('itemValue').value,
+                demand: document.getElementById('itemDemand').value
+            };
+            itemsData.push(newItem);
+            localStorage.setItem('sailorPieceItems', JSON.stringify(itemsData));
+            render();
+            e.target.reset();
+        });
+
+        render();
     </script>
 </body>
 </html>
