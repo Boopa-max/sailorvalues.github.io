@@ -5,51 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sailor Piece Values | Professional Trading Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0a0a0c; --card: #141417; --accent: #3b82f6; --border: #27272a; }
-        body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; }
-        .sidebar { background: #000; border-right: 1px solid var(--border); height: 100vh; position: fixed; width: 260px; z-index: 50; }
-        .content { margin-left: 260px; padding: 2rem; }
-        .value-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: 0.2s; }
-        .value-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-        .rarity-label { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
-        .Mythical { color: #ff4785; background: rgba(255, 71, 133, 0.1); }
-        .Secret { color: #a855f7; background: rgba(168, 85, 247, 0.1); }
-        .Legendary { color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
-        .Epic { color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+        :root { --bg: #0b0b0f; --sidebar: #111116; --card: #16161d; --border: #26262f; --accent: #3b82f6; --text-dim: #94a3b8; }
+        body { background: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        
+        /* Sidebar Glassmorphism */
+        .sidebar { width: 280px; height: 100vh; background: var(--sidebar); border-right: 1px solid var(--border); position: fixed; left: 0; top: 0; z-index: 50; padding: 2rem 1.5rem; }
+        .main-content { margin-left: 280px; padding: 2.5rem; }
+        
+        /* Premium Cards */
+        .item-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .item-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3); }
+        .item-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent); opacity: 0; transition: 0.3s; }
+        .item-card:hover::before { opacity: 1; }
+
+        /* Calculator Styles */
+        .calc-panel { background: linear-gradient(145deg, #16161d, #0b0b0f); border: 1px solid var(--border); border-radius: 24px; padding: 2rem; }
+        .calc-slot { background: rgba(255,255,255,0.03); border: 1px dashed #333; border-radius: 12px; min-height: 80px; display: flex; align-items: center; justify-content: center; }
+
+        .tag { font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .tag-mythical { background: rgba(236, 72, 153, 0.1); color: #ec4899; }
+        .tag-secret { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
+        
         .mono { font-family: 'JetBrains Mono', monospace; }
         
-        @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .content { margin-left: 0; padding: 1rem; }
-        }
+        @media (max-width: 1024px) { .sidebar { display: none; } .main-content { margin-left: 0; padding: 1.5rem; } }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar p-6 hidden md:block">
-        <div class="flex items-center gap-3 mb-10">
-            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-black italic text-xl">S</div>
-            <h1 class="font-extrabold text-xl tracking-tighter">SAILOR<br><span class="text-blue-500">VALUES</span></h1>
+    <aside class="sidebar">
+        <div class="flex items-center gap-3 mb-12">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-black italic text-xl shadow-lg shadow-blue-500/20">S</div>
+            <div>
+                <h1 class="font-extrabold text-lg leading-tight uppercase tracking-tighter">Sailor<span class="text-blue-500">Values</span></h1>
+                <p class="text-[9px] text-gray-500 font-bold tracking-widest uppercase">Trading Platform</p>
+            </div>
         </div>
-        <nav class="space-y-2">
-            <button onclick="filterType('all')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 font-semibold text-sm">🏠 Home</button>
-            <button onclick="filterType('Weapon')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 font-semibold text-sm">⚔️ Weapons</button>
-            <button onclick="filterType('Accessory')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 font-semibold text-sm">🧥 Accessories</button>
-            <button onclick="filterType('Fruit')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 font-semibold text-sm">🍍 Devil Fruits</button>
-            <button onclick="filterType('Material')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 font-semibold text-sm">📦 Materials</button>
+        
+        <nav class="space-y-1">
+            <p class="text-[10px] font-bold text-gray-600 mb-4 px-4 uppercase tracking-[2px]">Categories</p>
+            <button onclick="filterType('all')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 transition font-semibold text-sm flex items-center gap-3">🏠 Dashboard</button>
+            <button onclick="filterType('Weapon')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 transition font-semibold text-sm flex items-center gap-3">⚔️ Swords</button>
+            <button onclick="filterType('Accessory')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 transition font-semibold text-sm flex items-center gap-3">🧥 Accessories</button>
+            <button onclick="filterType('Fruit')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 transition font-semibold text-sm flex items-center gap-3">🍍 Fruits</button>
+            <button onclick="filterType('Material')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 transition font-semibold text-sm flex items-center gap-3">💎 Materials</button>
         </nav>
+
+        <div class="mt-auto pt-8 border-t border-white/5 text-center">
+            <p class="text-[10px] text-gray-500 font-bold mb-4 uppercase">Ver. 2.1 (April Update)</p>
+            <a href="https://guns.lol/BoopaPengu" class="inline-block w-full py-3 bg-white/5 rounded-xl text-xs font-bold hover:bg-white/10 transition">Boopa Directory →</a>
+        </div>
     </aside>
 
-    <main class="content">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+    <main class="main-content">
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
             <div>
-                <h2 class="text-3xl font-black italic">MARKET VALUES</h2>
-                <p class="text-gray-500 text-sm">Last Update: April 18, 2026 (Infinite Tower Meta)</p>
+                <h2 class="text-4xl font-black tracking-tighter uppercase italic">Market <span class="text-blue-500">Analytics</span></h2>
+                <div class="flex gap-4 mt-2">
+                    <span class="flex items-center gap-1 text-[10px] font-bold text-green-500 uppercase"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Live Prices</span>
+                    <span class="text-[10px] font-bold text-gray-500 uppercase">April 18, 2026</span>
+                </div>
             </div>
-            <input type="text" id="search" onkeyup="search()" placeholder="Search items..." class="bg-white/5 border border-white/10 rounded-xl px-6 py-3 w-full md:w-96 outline-none focus:border-blue-500">
+            <div class="relative w-full md:w-96">
+                <input type="text" id="search" onkeyup="search()" placeholder="Search item database..." 
+                    class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-blue-500 focus:ring-4 ring-blue-500/10 transition">
+            </div>
         </header>
+
+        <section class="calc-panel mb-12">
+            <div class="flex items-center gap-2 mb-6">
+                <div class="w-2 h-6 bg-blue-500 rounded-full"></div>
+                <h3 class="font-extrabold uppercase italic tracking-wider">Trading Calculator</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <div class="flex justify-between text-[11px] font-bold text-gray-500 uppercase">
+                        <span>Your Items</span>
+                        <span id="your-total" class="text-white mono">0 CR</span>
+                    </div>
+                    <div class="calc-slot" id="your-list">
+                        <p class="text-[10px] text-gray-600 font-bold uppercase">Add items to calculate</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex justify-between text-[11px] font-bold text-gray-500 uppercase">
+                        <span>Their Items</span>
+                        <span id="their-total" class="text-white mono">0 CR</span>
+                    </div>
+                    <div class="calc-slot" id="their-list">
+                        <p class="text-[10px] text-gray-600 font-bold uppercase">Add items to calculate</p>
+                    </div>
+                </div>
+            </div>
+            <div id="calc-status" class="mt-8 text-center py-4 bg-white/5 rounded-xl font-black text-sm uppercase tracking-widest text-gray-500">
+                Awaiting Trade Data...
+            </div>
+        </section>
 
         <div id="item-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             </div>
@@ -57,56 +110,55 @@
 
     <script>
         const database = [
-            // WEAPONS
-            { name: "Atomic Sword", price: "1.2M - 1.5M", rarity: "Mythical", demand: "🔥 High", type: "Weapon", icon: "☢️" },
-            { name: "Abyssal Empress", price: "1.1M - 1.3M", rarity: "Mythical", demand: "🔥 High", type: "Weapon", icon: "🔱" },
-            { name: "Ice Queen Sword", price: "950K - 1.1M", rarity: "Mythical", demand: "Stable", type: "Weapon", icon: "❄️" },
-            { name: "True Aizen", price: "800K", rarity: "Mythical", demand: "Stable", type: "Weapon", icon: "🌌" },
-            { name: "Shadow Monarch", price: "750K", rarity: "Mythical", demand: "Medium", type: "Weapon", icon: "💀" },
-            { name: "Yamato", price: "400K", rarity: "Mythical", demand: "Medium", type: "Weapon", icon: "⚔️" },
-            { name: "Rimuru Sword", price: "350K", rarity: "Mythical", demand: "Low", type: "Weapon", icon: "💧" },
-
-            // ACCESSORIES
-            { name: "Ice Queen Outfit", price: "150 - 200", rarity: "Mythical", demand: "Medium", type: "Accessory", icon: "👑" },
-            { name: "Moon Outfit", price: "60 - 85", rarity: "Mythical", demand: "Low", type: "Accessory", icon: "🌙" },
-            { name: "Atomic Outfit", price: "40 - 55", rarity: "Mythical", demand: "Low", type: "Accessory", icon: "🥋" },
-            { name: "Abyssal Outfit", price: "35 - 50", rarity: "Mythical", demand: "Low", type: "Accessory", icon: "🌑" },
-            { name: "Manipulator Outfit", price: "25 - 35", rarity: "Mythical", demand: "Low", type: "Accessory", icon: "🎭" },
-            { name: "Gojo Blindfold", price: "10 - 15", rarity: "Legendary", demand: "Very Low", type: "Accessory", icon: "👓" },
-
-            // FRUITS
-            { name: "Light Fruit", price: "20 - 25", rarity: "Legendary", demand: "High", type: "Fruit", icon: "☀️" },
-            { name: "Quake Fruit", price: "10 - 15", rarity: "Epic", demand: "Medium", type: "Fruit", icon: "🫨" },
-            { name: "Flame Fruit", price: "4 - 6", rarity: "Rare", demand: "Low", type: "Fruit", icon: "🔥" },
-
-            // MATERIALS / CURRENCY
-            { name: "Aura Crate", price: "450 - 500", rarity: "Secret", demand: "📈 Extreme", type: "Material", icon: "✨" },
-            { name: "Secret Chest", price: "3,000", rarity: "Secret", demand: "High", type: "Material", icon: "🎁" },
-            { name: "Mythical Chest", price: "950", rarity: "Mythical", demand: "Stable", type: "Material", icon: "📦" },
-            { name: "Abyss Sigil", price: "6 - 8", rarity: "Legendary", demand: "High", type: "Material", icon: "🌀" },
-            { name: "Evolution Fragment", price: "1,200", rarity: "Legendary", demand: "Stable", type: "Material", icon: "💎" }
+            { name: "Atomic Sword", price: 1350000, rarity: "Mythical", demand: "🔥 High", type: "Weapon", icon: "☢️" },
+            { name: "Ice Queen Sword", price: 1100000, rarity: "Mythical", demand: "🔥 High", type: "Weapon", icon: "❄️" },
+            { name: "Abyssal Empress", price: 1050000, rarity: "Mythical", demand: "Stable", type: "Weapon", icon: "🔱" },
+            { name: "Shadow Monarch", price: 750000, rarity: "Mythical", demand: "Medium", type: "Weapon", icon: "💀" },
+            { name: "Aura Crate", price: 485, rarity: "Secret", demand: "📈 Extreme", type: "Material", icon: "✨" },
+            { name: "Secret Chest", price: 3200, rarity: "Secret", demand: "High", type: "Material", icon: "🎁" },
+            { name: "Mythical Chest", price: 950, rarity: "Mythical", demand: "Stable", type: "Material", icon: "📦" },
+            { name: "Ice Queen Outfit", price: 185, rarity: "Mythical", demand: "Low", type: "Accessory", icon: "👑" },
+            { name: "Moon Outfit", price: 65, rarity: "Mythical", demand: "Very Low", type: "Accessory", icon: "🌙" },
+            { name: "Light Fruit", price: 22, rarity: "Legendary", demand: "Medium", type: "Fruit", icon: "☀️" },
+            { name: "Quake Fruit", price: 12, rarity: "Epic", demand: "Low", type: "Fruit", icon: "🫨" },
+            { name: "Abyss Sigil", price: 7, rarity: "Legendary", demand: "High", type: "Material", icon: "🌀" }
         ];
+
+        let ySum = 0, tSum = 0;
 
         function render(data) {
             const grid = document.getElementById('item-grid');
             grid.innerHTML = data.map(item => `
-                <div class="value-card">
-                    <div class="p-4 border-b border-white/5 flex justify-between items-center">
-                        <span class="rarity-label ${item.rarity}">${item.rarity}</span>
-                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">${item.type}</span>
+                <div class="item-card p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="tag tag-${item.rarity.toLowerCase()}">${item.rarity}</span>
+                        <div class="flex gap-2">
+                            <button onclick="calc('y',${item.price})" class="w-8 h-8 rounded-lg bg-green-500/10 text-green-500 flex items-center justify-center font-bold text-xs hover:bg-green-500 hover:text-white transition">Y</button>
+                            <button onclick="calc('t',${item.price})" class="w-8 h-8 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center font-bold text-xs hover:bg-red-500 hover:text-white transition">T</button>
+                        </div>
                     </div>
-                    <div class="p-6 text-center">
-                        <div class="text-5xl mb-4 drop-shadow-lg">${item.icon}</div>
-                        <h3 class="font-bold text-lg mb-1">${item.name}</h3>
-                        <p class="text-blue-500 font-black mono text-xl">${item.price}</p>
-                        <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold tracking-tighter">Value in Clan Rerolls (CR)</p>
+                    <div class="text-center pb-6">
+                        <div class="text-5xl mb-4">${item.icon}</div>
+                        <h4 class="font-extrabold text-sm uppercase tracking-tight mb-1">${item.name}</h4>
+                        <p class="text-blue-500 font-black mono text-lg">${item.price.toLocaleString()} <span class="text-[10px]">CR</span></p>
                     </div>
-                    <div class="bg-white/5 p-3 px-6 flex justify-between items-center">
-                        <span class="text-[10px] text-gray-500 font-bold">DEMAND</span>
-                        <span class="text-[10px] font-black ${item.demand.includes('High') ? 'text-red-500' : 'text-green-500'}">${item.demand}</span>
+                    <div class="pt-4 border-t border-white/5 flex justify-between items-center text-[10px] font-bold uppercase text-gray-500">
+                        <span>Demand</span>
+                        <span class="${item.demand.includes('High') ? 'text-red-500' : 'text-gray-400'}">${item.demand}</span>
                     </div>
                 </div>
             `).join('');
+        }
+
+        function calc(side, p) {
+            if(side === 'y') ySum += p; else tSum += p;
+            document.getElementById('your-total').innerText = ySum.toLocaleString() + " CR";
+            document.getElementById('their-total').innerText = tSum.toLocaleString() + " CR";
+            const diff = ySum - tSum;
+            const status = document.getElementById('calc-status');
+            if(diff > 0) { status.innerText = "L - YOU ARE GIVING TOO MUCH"; status.style.color = "#ef4444"; }
+            else if(diff < 0) { status.innerText = "W - MASSIVE WIN FOR YOU"; status.style.color = "#22c55e"; }
+            else { status.innerText = "FAIR TRADE"; status.style.color = "#3b82f6"; }
         }
 
         function search() {
@@ -115,8 +167,8 @@
         }
 
         function filterType(type) {
-            if(type === 'all') return render(database);
-            render(database.filter(i => i.type === type));
+            if(type === 'all') render(database);
+            else render(database.filter(i => i.type === type));
         }
 
         render(database);
