@@ -3,307 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sailor Piece Value! | Sailor Piece Values</title>
+    <title>Boopa Piece | Pro Market Analytics</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0d11;
-            --card-bg: rgba(26, 29, 36, 0.8);
+            --bg-color: #08090d;
+            --card-bg: rgba(20, 23, 31, 0.7);
             --accent: #6366f1;
-            --accent-hover: #4f46e5;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
             --border: #2dd4bf;
-            --admin-bg: rgba(30, 27, 75, 0.9);
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+            --danger: #ef4444;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); max-width: 1366px; margin: 0 auto; overflow-x: hidden; }
+
+        /* Animated Background Orbs */
+        .bg-orb {
+            position: fixed; width: 500px; height: 500px; border-radius: 50%;
+            filter: blur(100px); opacity: 0.1; z-index: -1; animation: float 20s infinite alternate;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            max-width: 1366px;
-            margin: 0 auto;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            position: relative;
-        }
+        @keyframes float { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
 
-        /* --- BACKGROUND ANIMATION --- */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(45, 212, 191, 0.05) 0%, transparent 40%);
-            z-index: -1;
+        /* --- DASHBOARD STATS --- */
+        .stats-container {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem; padding: 2rem;
         }
-
-        /* Animated floating orbs */
-        .bg-animate {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            overflow: hidden;
-        }
-
-        .orb {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            animation: move 20s infinite alternate;
-        }
-
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(20%, 20%); }
-        }
-
-        /* --- HEADER --- */
-        header {
-            padding: 1.5rem 2rem;
-            background: rgba(11, 13, 17, 0.7);
+        .stat-card {
+            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem; border-radius: 12px; text-align: center;
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        }
+        .stat-val { font-size: 1.5rem; font-weight: 800; color: var(--border); }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 5px; }
+
+        /* --- ADMIN LOGIN --- */
+        .login-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            display: none; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .login-box {
+            background: #1a1d24; padding: 2rem; border-radius: 15px; width: 350px;
+            border: 1px solid var(--accent); text-align: center;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(to right, #818cf8, #2dd4bf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeIn 0.8s ease-out;
+        /* --- STYLES --- */
+        header { padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(to right, #818cf8, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .controls { padding: 0 2rem; display: flex; justify-content: space-between; margin-bottom: 2rem; }
+        input, select { background: #1a1d24; border: 1px solid #334155; color: white; padding: 0.8rem; border-radius: 8px; outline: none; }
+        
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; padding: 0 2rem 2rem; }
+        .item-card { 
+            background: var(--card-bg); padding: 1.5rem; border-radius: 12px; 
+            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+            animation: fadeIn 0.5s ease forwards;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .item-card:hover { border-color: var(--accent); transform: translateY(-5px); }
 
-        /* --- ADMIN PANEL --- */
-        .admin-panel {
-            background-color: var(--admin-bg);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem;
-            display: none;
-            animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .admin-panel.visible { display: block; }
-
-        /* --- ITEM CARDS ANIMATION --- */
-        .item-card {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(5px);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s ease;
-            animation: cardEntrance 0.6s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes cardEntrance {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideDown { 
-            from { opacity: 0; transform: translateY(-20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        .item-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            border-color: var(--accent);
-            background: rgba(30, 34, 42, 0.9);
-        }
-
-        /* --- UTILS --- */
-        .admin-toggle {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .admin-toggle:hover { background: var(--accent); color: white; }
-
-        .controls {
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            margin: 2rem 0;
-            gap: 1rem;
-        }
-
-        input, select, .filter-btn {
-            background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
-            outline: none;
-        }
-
-        .filter-btn.active { background: var(--accent); border-color: var(--accent); }
-
-        .item-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 0 2rem 2rem 2rem;
-        }
-
-        .value-high { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }
-
+        .admin-panel { display: none; background: #1e1b4b; margin: 0 2rem 2rem; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--accent); }
+        .active { display: block !important; }
+        .refresh-notice { font-size: 11px; color: var(--text-muted); text-align: center; margin-bottom: 1rem; }
     </style>
 </head>
 <body>
-
-    <div class="bg-animate">
-        <div class="orb" style="background: var(--accent); top: -10%; left: -10%;"></div>
-        <div class="orb" style="background: var(--border); bottom: -10%; right: -10%; animation-delay: -5s;"></div>
-    </div>
+    <div class="bg-orb" style="background:var(--accent); top:-100px; left:-100px;"></div>
+    <div class="bg-orb" style="background:var(--border); bottom:-100px; right:-100px; animation-delay:-5s;"></div>
 
     <header>
-        <div class="logo">BOOPA PIECE VALUES</div>
-        <button class="admin-toggle" id="adminToggleBtn">Admin Access</button>
+        <div class="logo">BOOPA ANALYTICS</div>
+        <div>
+            <span id="lastRefreshText" style="font-size: 11px; color: var(--text-muted); margin-right: 15px;"></span>
+            <button onclick="showLogin()" style="background:none; border:1px solid var(--accent); color:var(--accent); padding:5px 15px; border-radius:5px; cursor:pointer;">Owner Login</button>
+        </div>
     </header>
 
-    <main>
-        <div class="admin-panel" id="adminPanel">
-            <h3 style="margin-bottom:1rem;">Add New Item</h3>
-            <form id="addItemForm" style="display:flex; gap:10px; flex-wrap:wrap;">
-                <input type="text" id="itemName" placeholder="Item Name" required>
-                <select id="itemType" required>
-                    <option value="ITEMS.ACCESSORY">Accessory</option>
-                    <option value="MELEE.SWORD">Sword</option>
-                </select>
-                <input type="text" id="itemValue" placeholder="Value">
-                <input type="text" id="itemDemand" placeholder="Demand">
-                <button type="submit" class="admin-toggle" style="background:var(--accent); color:white;">Add to List</button>
-            </form>
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-val" id="totalItems">0</div>
+            <div class="stat-label">Tracked Items</div>
         </div>
-
-        <div class="controls">
-            <input type="text" id="searchInput" placeholder="Search the value list..." style="width: 350px;">
-            <div style="display:flex; gap:10px;">
-                <button class="filter-btn active" data-filter="ALL">All</button>
-                <button class="filter-btn" data-filter="ITEMS.ACCESSORY">Accessories</button>
-                <button class="filter-btn" data-filter="MELEE.SWORD">Swords</button>
-            </div>
+        <div class="stat-card">
+            <div class="stat-val" id="highDemandCount" style="color:#fbbf24;">0</div>
+            <div class="stat-label">High Demand (10/10)</div>
         </div>
+        <div class="stat-card">
+            <div class="stat-val" id="marketTrend">Stable</div>
+            <div class="stat-label">Market Trend</div>
+        </div>
+    </div>
 
-        <div class="item-grid" id="itemGrid"></div>
-    </main>
+    <div class="admin-panel" id="adminPanel">
+        <h3 style="margin-bottom:1rem;">Admin Terminal</h3>
+        <form id="addItemForm" style="display:flex; gap:10px; flex-wrap:wrap;">
+            <input type="text" id="itemName" placeholder="Item Name" required>
+            <select id="itemType"><option value="ACCESSORY">Accessory</option><option value="SWORD">Sword</option></select>
+            <input type="number" id="itemValue" placeholder="Base Value (Numerical)">
+            <input type="number" id="itemDemand" placeholder="Demand (1-10)">
+            <button type="submit" style="background:var(--accent); color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">Add Item</button>
+            <button type="button" onclick="logout()" style="background:var(--danger); color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">Logout</button>
+        </form>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search values..." style="width:300px;">
+    </div>
+
+    <div class="item-grid" id="itemGrid"></div>
+
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h2 style="margin-bottom:1rem;">Owner Access</h2>
+            <input type="password" id="adminPass" placeholder="Enter Password" style="width:100%; margin-bottom:1rem;">
+            <button onclick="checkLogin()" style="width:100%; background:var(--accent); color:white; border:none; padding:10px; border-radius:8px; cursor:pointer;">Login</button>
+            <button onclick="hideLogin()" style="margin-top:10px; background:none; border:none; color:var(--text-muted); cursor:pointer;">Cancel</button>
+        </div>
+    </div>
 
     <script>
-        const defaultItems = [
-            { id: 1, name: "Ragna Set", type: "ITEMS.ACCESSORY", value: "1.65M", demand: "High - 10" },
-            { id: 2, name: "Madoka Set", type: "ITEMS.ACCESSORY", value: "825K", demand: "High - 9" },
-            { id: 3, name: "Atomic Sword", type: "MELEE.SWORD", value: "1,086", demand: "Moderate - 8" }
+        // CONFIGURATION
+        const ADMIN_PASSWORD = "BoopaPengu"; // Set your password here
+        const REFRESH_INTERVAL = 12 * 60 * 60 * 1000; // 12 Hours in milliseconds
+
+        let itemsData = JSON.parse(localStorage.getItem('sailorData')) || [
+            { id: 1, name: "Atomic Sword", type: "SWORD", value: 1086, demand: 8 },
+            { id: 2, name: "Ragna Set", type: "ACCESSORY", value: 1650000, demand: 10 },
+            { id: 3, name: "Madoka Set", type: "ACCESSORY", value: 825000, demand: 9 }
         ];
 
-        let itemsData = JSON.parse(localStorage.getItem('sailorPieceItems')) || defaultItems;
-        let currentFilter = 'ALL';
-        let searchQuery = '';
+        // 12-HOUR AUTO REFRESH LOGIC
+        function handleMarketRefresh() {
+            const lastRefresh = localStorage.getItem('lastRefreshTime');
+            const now = Date.now();
+
+            if (!lastRefresh || (now - lastRefresh) > REFRESH_INTERVAL) {
+                // Simulate market fluctuation (+/- 5%)
+                itemsData = itemsData.map(item => {
+                    const fluctuation = 1 + (Math.random() * 0.1 - 0.05);
+                    return { ...item, value: Math.floor(item.value * fluctuation) };
+                });
+                localStorage.setItem('lastRefreshTime', now);
+                save();
+                console.log("Market values refreshed for the next 12 hours.");
+            }
+            
+            const timePassed = now - localStorage.getItem('lastRefreshTime');
+            const timeLeft = Math.max(0, REFRESH_INTERVAL - timePassed);
+            const hoursLeft = Math.floor(timeLeft / (1000 * 60 * 60));
+            document.getElementById('lastRefreshText').textContent = `Next refresh in: ${hoursLeft}h`;
+        }
+
+        function save() {
+            localStorage.setItem('sailorData', JSON.stringify(itemsData));
+            updateStats();
+            render();
+        }
+
+        function updateStats() {
+            document.getElementById('totalItems').textContent = itemsData.length;
+            const highDemand = itemsData.filter(i => i.demand >= 9).length;
+            document.getElementById('highDemandCount').textContent = highDemand;
+            document.getElementById('marketTrend').textContent = highDemand > (itemsData.length / 2) ? "Bullish" : "Stable";
+        }
 
         function render() {
             const grid = document.getElementById('itemGrid');
+            const search = document.getElementById('searchInput').value.toLowerCase();
             grid.innerHTML = '';
             
-            const filtered = itemsData.filter(i => {
-                const f = currentFilter === 'ALL' || i.type === currentFilter;
-                const s = i.name.toLowerCase().includes(searchQuery.toLowerCase());
-                return f && s;
-            });
-
-            filtered.forEach((item, index) => {
+            itemsData.filter(i => i.name.toLowerCase().includes(search)).forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'item-card';
-                // Staggered animation effect
-                card.style.animationDelay = `${index * 0.05}s`;
                 card.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:start;">
-                        <span style="color:var(--border); font-size:10px; font-weight:bold;">${item.type}</span>
+                    <div style="font-size:10px; color:var(--border); font-weight:bold;">${item.type}</div>
+                    <h2 style="margin:10px 0;">${item.name}</h2>
+                    <div style="display:flex; justify-content:space-between; border-top:1px solid #333; padding-top:10px;">
+                        <div><p style="font-size:10px; color:var(--text-muted);">VALUE</p><b>${item.value.toLocaleString()}</b></div>
+                        <div style="text-align:right;"><p style="font-size:10px; color:var(--text-muted);">DEMAND</p><b>${item.demand}/10</b></div>
                     </div>
-                    <h2 style="margin: 10px 0 20px 0;">${item.name}</h2>
-                    <div style="display:flex; justify-content:space-between; border-top:1px solid #333; padding-top:15px;">
-                        <div>
-                            <p style="color:var(--text-muted); font-size:12px;">VALUE</p>
-                            <p class="value-high">${item.value}</p>
-                        </div>
-                        <div style="text-align:right;">
-                            <p style="color:var(--text-muted); font-size:12px;">DEMAND</p>
-                            <p>${item.demand}</p>
-                        </div>
-                    </div>
+                    ${sessionStorage.getItem('isAdmin') ? `<button onclick="deleteItem(${item.id})" style="margin-top:15px; color:red; background:none; border:none; cursor:pointer; font-size:11px;">Remove Item</button>` : ''}
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // Search logic
-        document.getElementById('searchInput').addEventListener('input', e => {
-            searchQuery = e.target.value;
-            render();
-        });
-
-        // Filter logic
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelector('.filter-btn.active').classList.remove('active');
-                btn.classList.add('active');
-                currentFilter = btn.dataset.filter;
+        // LOGIN SYSTEM
+        function showLogin() { document.getElementById('loginOverlay').style.display = 'flex'; }
+        function hideLogin() { document.getElementById('loginOverlay').style.display = 'none'; }
+        
+        function checkLogin() {
+            if (document.getElementById('adminPass').value === ADMIN_PASSWORD) {
+                sessionStorage.setItem('isAdmin', 'true');
+                document.getElementById('adminPanel').classList.add('active');
+                hideLogin();
                 render();
-            });
-        });
+            } else { alert("Access Denied"); }
+        }
 
-        // Admin Toggle
-        document.getElementById('adminToggleBtn').addEventListener('click', () => {
-            document.getElementById('adminPanel').classList.toggle('visible');
-        });
+        function logout() {
+            sessionStorage.removeItem('isAdmin');
+            document.getElementById('adminPanel').classList.remove('active');
+            render();
+        }
 
-        // Add Item logic
-        document.getElementById('addItemForm').addEventListener('submit', e => {
+        window.deleteItem = (id) => {
+            itemsData = itemsData.filter(i => i.id !== id);
+            save();
+        };
+
+        document.getElementById('addItemForm').onsubmit = (e) => {
             e.preventDefault();
-            const newItem = {
+            itemsData.push({
                 id: Date.now(),
                 name: document.getElementById('itemName').value,
                 type: document.getElementById('itemType').value,
-                value: document.getElementById('itemValue').value,
-                demand: document.getElementById('itemDemand').value
-            };
-            itemsData.push(newItem);
-            localStorage.setItem('sailorPieceItems', JSON.stringify(itemsData));
-            render();
+                value: parseInt(document.getElementById('itemValue').value),
+                demand: parseInt(document.getElementById('itemDemand').value)
+            });
+            save();
             e.target.reset();
-        });
+        };
 
+        document.getElementById('searchInput').oninput = render;
+
+        // Initialize
+        handleMarketRefresh();
+        updateStats();
         render();
     </script>
 </body>
