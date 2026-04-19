@@ -16,25 +16,31 @@ def scrape():
             "categories": {"Fruits": [], "Gamepass": [], "Items": []}
         }
 
-        # Mengambil data asli
-        found_anything = False
-        for item in soup.find_all(['div', 'tr']):
+        # Mencari semua elemen yang kemungkinan berisi item
+        items = soup.find_all(['div', 'tr', 'li'])
+
+        for item in items:
             text = item.get_text(separator="|").strip()
             if "|" in text:
                 parts = [p.strip() for p in text.split("|") if len(p.strip()) > 1]
+                
+                # Validasi: Harus ada Nama dan Harga (minimal 2 bagian)
                 if len(parts) >= 2:
-                    name, val = parts[0], parts[-1]
-                    cat = "Fruits" if "fruit" in name.lower() else "Gamepass" if "pass" in name.lower() else "Items"
-                    data["categories"][cat].append({"name": name, "value": val})
-                    found_anything = True
-
-        # JIKA GAGAL SCAN, KITA KASIH DATA CADANGAN (Supaya web tidak kosong)
-        if not found_anything:
-            data["categories"]["Gamepass"] = [{"name": "2x Drop (Auto-Sync)", "value": "500K Gems"}]
-            data["categories"]["Fruits"] = [{"name": "Magma Fruit (Auto-Sync)", "value": "200K Gems"}]
+                    name = parts[0]
+                    val = parts[-1]
+                    
+                    # Filter agar tidak memasukkan teks sampah yang kepanjangan
+                    if len(name) < 25 and len(val) < 20 and any(char.isdigit() for char in val):
+                        low_name = name.lower()
+                        if "fruit" in low_name: cat = "Fruits"
+                        elif any(x in low_name for x in ["pass", "2x", "vip"]): cat = "Gamepass"
+                        else: cat = "Items"
+                        
+                        data["categories"][cat].append({"name": name, "value": val})
 
         with open('data.json', 'w') as f:
             json.dump(data, f, indent=4)
+        print("Data berhasil dirapikan!")
             
     except Exception as e:
         print(f"Error: {e}")
