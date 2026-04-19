@@ -6,40 +6,53 @@ import datetime
 URL = "https://sailor-piece.vaultedvaluesx.com/value-list"
 
 def scrape_values():
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    # We pretend to be a real Chrome browser so the site doesn't block us
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+    
     try:
-        response = requests.get(URL, headers=headers, timeout=15)
+        response = requests.get(URL, headers=headers, timeout=20)
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        data_structure = {
+        # This will hold the items we find
+        scraped_data = {
             "last_updated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
-            "categories": {"Fruits": [], "Gamepass": [], "Items": [], "Swords": []}
+            "categories": {
+                "Fruits": [],
+                "Gamepass": [],
+                "Items": []
+            }
         }
 
-        # This looks for any 'row' or 'container' commonly used in value lists
-        items_found = soup.find_all(['div', 'tr'], class_=lambda x: x and ('item' in x or 'row' in x))
-
-        for item in items_found:
-            # Try to find the name and value inside the item
-            name_tag = item.find(['h3', 'b', 'strong', 'td'])
-            value_tag = item.find_all(['p', 'span', 'td'])[-1] # Usually the last text is the value
+        # Look for the table rows or cards on the site
+        # We search for any 'div' or 'tr' that looks like an item
+        for item in soup.find_all(['div', 'tr']):
+            text_content = item.get_text(separator='|').strip()
             
-            if name_tag and value_tag:
-                name = name_tag.text.strip()
-                val = value_tag.text.strip()
+            # If the row has a value-like pattern (e.g., '100K' or 'Gems')
+            if any(char.isdigit() for char in text_content) and ('|' in text_content):
+                parts = text_content.split('|')
+                name = parts[0].strip()
+                val = parts[-1].strip()
+
+                # Filter into your requested categories
+                category = "Items"
+                if "fruit" in name.lower(): category = "Fruits"
+                elif "pass" in name.lower() or "2x" in name.lower(): category = "Gamepass"
                 
-                # Filter into categories based on keywords
-                cat = "Items"
-                if any(x in name.lower() for x in ["fruit", "light", "magma"]): cat = "Fruits"
-                elif any(x in name.lower() for x in ["pass", "2x", "vip"]): cat = "Gamepass"
-                
-                data_structure["categories"][cat].append({"name": name, "value": val})
+                if len(name) > 2 and len(name) < 50: # Ignore random small text
+                    scraped_data["categories"][category].append({
+                        "name": name, 
+                        "value": val
+                    })
 
         with open('data.json', 'w') as f:
-            json.dump(data_structure, f, indent=4)
-            
+            json.dump(scraped_data, f, indent=4)
+        print("Done! Data saved to data.json")
+
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error analyzing website: {e}")
 
 if __name__ == "__main__":
     scrape_values()
