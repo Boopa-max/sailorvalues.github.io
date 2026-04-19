@@ -1,0 +1,17 @@
+{
+  "last_updated": "Initializing...",
+  "categories": {
+    "Fruits": [
+      { "name": "Loading...", "value": "0" }
+    ],
+    "Gamepass": [
+      { "name": "Loading...", "value": "0" }
+    ],
+    "Items": [
+      { "name": "Loading...", "value": "0" }
+    ],
+    "Swords": [
+      { "name": "Loading...", "value": "0" }
+    ]
+  }
+}
