@@ -1,0 +1,26 @@
+name: Auto Update Values
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install Libs
+        run: pip install requests beautifulsoup4
+      - name: Run Scrape
+        run: python scraper.py
+      - name: Commit Data
+        run: |
+          git config --global user.name "ValueBot"
+          git config --global user.email "bot@github.com"
+          git add data.json
+          git commit -m "Auto Update: $(date)" || exit 0
+          git push
