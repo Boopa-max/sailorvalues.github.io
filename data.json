@@ -1,4 +1,541 @@
 {
-  "last_updated": "Belum Update",
-  "categories": { "Fruits": [], "Gamepass": [], "Items": [] }
+    "last_updated": "19 Apr 2026, 14:12",
+    "categories": {
+        "Fruits": [],
+        "Gamepass": [],
+        "Items": [
+            {
+                "name": "Vaulted Values X",
+                "value": "Vaulted Values X. All rights reserved."
+            },
+            {
+                "name": "Vaulted Values X",
+                "value": "Login"
+            },
+            {
+                "name": "Vaulted Values X",
+                "value": "Login"
+            },
+            {
+                "name": "Value List",
+                "value": "Login With Roblox"
+            },
+            {
+                "name": "Value List",
+                "value": "Login With Roblox"
+            },
+            {
+                "name": "Value List",
+                "value": "Messages"
+            },
+            {
+                "name": "Sailor Piece",
+                "value": "Login With Roblox"
+            },
+            {
+                "name": "Sailor Piece",
+                "value": "Vaulted Values X. All rights reserved."
+            },
+            {
+                "name": "Sailor Piece",
+                "value": "Vaulted Values X. All rights reserved."
+            },
+            {
+                "name": "Sailor Piece",
+                "value": "Contact Support"
+            },
+            {
+                "name": "Sailor Piece",
+                "value": "Values, calculator tools, trade ads, messages, and community links for Sailor Piece."
+            },
+            {
+                "name": "Vaulted Values X is an independent fan-made platform and is not affiliated with, endorsed by, or sponsored by Roblox Corporation or any of its trademarks.",
+                "value": "Vaulted Values X. All rights reserved."
+            },
+            {
+                "name": "Vaulted Values X is an independent fan-made platform and is not affiliated with, endorsed by, or sponsored by Roblox Corporation or any of its trademarks.",
+                "value": "Vaulted Values X. All rights reserved."
+            },
+            {
+                "name": "Contact: ValueVaultX@gmail.com",
+                "value": "Vaulted Values X. All rights reserved."
+            },
+            {
+                "name": "Game Value List",
+                "value": "Yes"
+            },
+            {
+                "name": "Game Value List",
+                "value": "Yes"
+            },
+            {
+                "name": "Game Value List",
+                "value": "Codes available"
+            },
+            {
+                "name": "Game Value List",
+                "value": "Codes available"
+            },
+            {
+                "name": "192",
+                "value": "Codes available"
+            },
+            {
+                "name": "Value List",
+                "value": "Yes"
+            },
+            {
+                "name": "Value List",
+                "value": "Discord"
+            },
+            {
+                "name": "All",
+                "value": "Game Pass"
+            },
+            {
+                "name": "Showing",
+                "value": "matching item"
+            },
+            {
+                "name": "Ragna Set",
+                "value": "Yes"
+            },
+            {
+                "name": "Ragna Set",
+                "value": "Yes"
+            },
+            {
+                "name": "Ragna Set",
+                "value": "No"
+            },
+            {
+                "name": "Ragna Set",
+                "value": "No"
+            },
+            {
+                "name": "CRR Value",
+                "value": "1.65M"
+            },
+            {
+                "name": "Demand",
+                "value": "High - 10"
+            },
+            {
+                "name": "Stability",
+                "value": "Unstable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "No"
+            },
+            {
+                "name": "Madoka Set",
+                "value": "No"
+            },
+            {
+                "name": "Madoka Set",
+                "value": "No"
+            },
+            {
+                "name": "CRR Value",
+                "value": "825K-850K"
+            },
+            {
+                "name": "Demand",
+                "value": "High - 9"
+            },
+            {
+                "name": "Stability",
+                "value": "Unstable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "No"
+            },
+            {
+                "name": "2x Drop",
+                "value": "Yes"
+            },
+            {
+                "name": "2x Drop",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "500K-600K"
+            },
+            {
+                "name": "Demand",
+                "value": "Absurd - 10"
+            },
+            {
+                "name": "Stability",
+                "value": "Unstable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "2x Luck",
+                "value": "Yes"
+            },
+            {
+                "name": "2x Luck",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "400K-420K"
+            },
+            {
+                "name": "Demand",
+                "value": "Very High - 10"
+            },
+            {
+                "name": "Stability",
+                "value": "Unstable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "2x Gems",
+                "value": "Yes"
+            },
+            {
+                "name": "2x Gems",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "25,000-30,000"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium-9"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "2x Exp",
+                "value": "Yes"
+            },
+            {
+                "name": "2x Exp",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "10,000-14,000"
+            },
+            {
+                "name": "Demand",
+                "value": "Low - 1"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "2x Money",
+                "value": "Yes"
+            },
+            {
+                "name": "2x Money",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "9,000-13,000"
+            },
+            {
+                "name": "Demand",
+                "value": "Dead - 1"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Esdeath (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Esdeath (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "2,230"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 3"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Saber v2 (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Saber v2 (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "2,184"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 1"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Kokushibo (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Kokushibo (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "2,092"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 3"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Madara (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Madara (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "2,050"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 3"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Saber v2 (Mastery Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Saber v2 (Mastery Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "1,575"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 1"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Aizen v2 (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Aizen v2 (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "1,530"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 2"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Esdeath (Mastery Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Esdeath (Mastery Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "1,525"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 3"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Kokushibo (Mastery Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Kokushibo (Mastery Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "1,425"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 3"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Madara (Mastery Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Madara (Mastery Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "1,290"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 3"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Gilgamesh (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "Gilgamesh (Full Set)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "1,116"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 2"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            },
+            {
+                "name": "Atomic (with sigil)",
+                "value": "Yes"
+            },
+            {
+                "name": "Atomic (with sigil)",
+                "value": "Yes"
+            },
+            {
+                "name": "CRR Value",
+                "value": "1,086"
+            },
+            {
+                "name": "Demand",
+                "value": "Moderate - 8"
+            },
+            {
+                "name": "Stability",
+                "value": "Stable"
+            },
+            {
+                "name": "Obtainable?",
+                "value": "Yes"
+            }
+        ]
+    }
 }
