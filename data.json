@@ -1,16 +1,16 @@
 {
-    "last_updated": "19 Apr 2026, 14:18",
+    "last_updated": "20 Apr 2026, 02:12",
     "categories": {
         "Fruits": [],
         "Gamepass": [],
         "Items": [
             {
                 "name": "CRR Value",
-                "value": "1.65M"
+                "value": "1.3M-1.65M"
             },
             {
                 "name": "Demand",
-                "value": "High - 10"
+                "value": "High - 8"
             },
             {
                 "name": "CRR Value",
@@ -22,43 +22,51 @@
             },
             {
                 "name": "CRR Value",
-                "value": "500K-600K"
+                "value": "400K-450K"
             },
             {
                 "name": "Demand",
-                "value": "Absurd - 10"
+                "value": "High - 8"
             },
             {
                 "name": "CRR Value",
-                "value": "400K-420K"
+                "value": "340K-385K"
             },
             {
                 "name": "Demand",
-                "value": "Very High - 10"
+                "value": "High - 7"
             },
             {
                 "name": "CRR Value",
-                "value": "25,000-30,000"
+                "value": "100K-130K"
             },
             {
                 "name": "Demand",
-                "value": "Medium-9"
+                "value": "Medium - 6"
             },
             {
                 "name": "CRR Value",
-                "value": "10,000-14,000"
+                "value": "15,000-25,000"
             },
             {
                 "name": "Demand",
-                "value": "Low - 1"
+                "value": "Low - 3"
             },
             {
                 "name": "CRR Value",
-                "value": "9,000-13,000"
+                "value": "13,000-22,000"
             },
             {
                 "name": "Demand",
-                "value": "Dead - 1"
+                "value": "Low - 3"
+            },
+            {
+                "name": "CRR Value",
+                "value": "3,500-4,000"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 6"
             },
             {
                 "name": "CRR Value",
@@ -70,14 +78,6 @@
             },
             {
                 "name": "CRR Value",
-                "value": "2,184"
-            },
-            {
-                "name": "Demand",
-                "value": "Medium - 1"
-            },
-            {
-                "name": "CRR Value",
                 "value": "2,092"
             },
             {
@@ -86,19 +86,11 @@
             },
             {
                 "name": "CRR Value",
-                "value": "2,050"
+                "value": "1,800"
             },
             {
                 "name": "Demand",
                 "value": "Medium - 3"
-            },
-            {
-                "name": "CRR Value",
-                "value": "1,575"
-            },
-            {
-                "name": "Demand",
-                "value": "Medium - 1"
             },
             {
                 "name": "CRR Value",
@@ -147,6 +139,14 @@
             {
                 "name": "Demand",
                 "value": "Moderate - 8"
+            },
+            {
+                "name": "CRR Value",
+                "value": "1,002"
+            },
+            {
+                "name": "Demand",
+                "value": "Medium - 3"
             }
         ]
     }
